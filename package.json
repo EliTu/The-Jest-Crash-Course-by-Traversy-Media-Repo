@@ -1,0 +1,22 @@
+{
+  "name": "sss",
+  "version": "1.0.0",
+  "description": "Jest Crash Course by Traversy Media",
+  "main": "test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "Jest",
+    "Unit",
+    "testing"
+  ],
+  "author": "Eliad Touksher",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.7.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

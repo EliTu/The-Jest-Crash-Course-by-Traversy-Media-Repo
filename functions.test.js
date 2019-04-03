@@ -44,7 +44,25 @@ const functions = require('./functions');
 
 // Arrays:
 
-test('Admin should be in usernames', () => {
-    const usernames = ['john', 'jim', 'ann', 'admin'];
-    expect(usernames).toContain('admin');
+// test('Admin should be in usernames', () => {
+//     const usernames = ['john', 'jim', 'ann', 'admin'];
+//     expect(usernames).toContain('admin');
+// });
+
+// Async data - Promise:
+
+// test('User fetched name should be Leanne Graham', () => {
+//     expect.assertions(1);
+//     return functions.fetchUser()
+//         .then(data => {
+//             expect(data.name).toEqual('Leanne Graham');
+//         })
+// });
+
+// Async data - Async / Await:
+
+test('User fetched name should be Leanne Graham', async () => {
+    expect.assertions(1);
+    const data = await functions.fetchUser();
+    expect(data.name).toEqual('Leanne Graham');
 });

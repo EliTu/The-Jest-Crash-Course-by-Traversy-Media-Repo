@@ -230,7 +230,7 @@ const reverseString = str =>
 module.exports = reverseString;
 ```
 
-**_ Test #1 - Use `toBeDEfined()` to check if the function exists _**: Now we will import the functions and write the test inside the test file. We will first want to check if the function is even defined and exists, and so we will use the `toBeDefined()` matcher for that.
+**_ Test #1 - Use `toBeDefined()` to check if the function exists _**: Now we will import the functions and write the test inside the test file. We will first want to check if the function is even defined and exists, and so we will use the `toBeDefined()` matcher for that.
 
 ```js
 const reverseString = require("./reversestring");
@@ -241,3 +241,161 @@ test("reverseString function exists", () => {
 ```
 
 **_ Test #2 - Check if the function reverses the string _**: Now we will write a test to see if the function actually does what is supposed to do and reverses the string correctly.
+
+```js
+test("String should be reversed", () => {
+  expect(reverseString("hello")).toEqual("olleh");
+});
+```
+
+We'll do another test to see what happen if we pass the string 'Hello' (uppercase 'H') and run the test.
+
+```js
+test("String should be reversed", () => {
+  expect(reverseString("Hello")).toEqual("olleh");
+});
+```
+
+Of course, the test fails, as Jest expects 'olleh' but receives 'olleH'. We could refactor our original function to make sure that no matter what string we pass in the argument, it will pass as a lowercase letter string, by adding the `toLowerCase()` method to the string.
+
+```js
+const reverseString = str =>
+  str
+    .toLowerCase()
+    .split("")
+    .reverse()
+    .join("");
+
+module.exports = reverseString;
+```
+
+Now the test passes, even though we pass in 'Hello' as the argument string.
+
+### Testing the 'chunkedArr` function
+
+Again, we will start by creating new files, one for the function (`chunkarr.js`) and one for the testing (`chunkarr.test.js`). In the function file we will put the `chunkArr` function from the "JavaScript Cardio session 2" that takes an array and divide it into chunks based on an additional number passed as an argument. Also, we will export this file so we could import it into the test file.
+
+```js
+const chunkArray = (arr, len) => {
+  const chunkedArr = [];
+
+  // Loop through arr
+  arr.forEach(val => {
+    // Get last element
+    const last = chunkedArr[chunkedArr.length - 1];
+
+    // Check if last and if last length is equal to the chunk len
+    if (!last || last.length === len) {
+      chunkedArr.push([val]);
+    } else {
+      last.push(val);
+    }
+  });
+
+  return chunkedArr;
+};
+
+module.exports = chunkArray;
+```
+
+**_ Test #1 - Use `toBeDefined()` to check if the function exists _**: Just like we did before, we will first write a test to check and see if the function imports and is set correctly.
+
+```js
+const chunkArray = require("./chunkarr");
+
+test("chunkArray fucntion exists", () => {
+  expect(chunkArray).toBeDefined();
+});
+```
+
+**_ Test #2 - Check if the function chunks an array correctly _**: Next up we will check if the function is able to produce the desired result by chunking an array based on the number we pass in the `len` parameter. The result should chunk the array into the specified amount, like an array of 10 values, that should be chunked into 2 pieces, meaning 5 arrays that contain 2 values each.
+
+```js
+test("Chunk an array of 10 values with the length of 2", () => {
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const len = 2;
+  const chunkedArr = chunkArray(numbers, len);
+
+  expect(chunkedArr).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]);
+});
+```
+
+We run the test and see that everything passes correctly. We can test another case of the same function, this time we can test an array with 3 values, that should be chunked into 3 separate pieces containing 1 value.
+
+```js
+test("Chunk an array of 3 values with the length of 1", () => {
+  const numbers = [1, 2, 3];
+  const len = 1;
+  const chunkedArr = chunkArray(numbers, len);
+
+  expect(chunkedArr).toEqual([[1], [2], [3]]);
+});
+```
+
+We run the test and it passes successfully.
+
+### Testing the `isAnagram` function
+
+Next up we're going to check the "JavaScript Cardio session 2" `isAnagram` function. This function takes in 2 strings and checks to see if they are an anagram, meaning if the 2 strings use the same characters (ignoring uppercase/lowercase, special signs, spaces, numbers etc). Again, we'll create 2 files, one for the function and one for the test.
+
+```js
+function isAnagram(str1, str2) {
+  return formatStr(str1) === formatStr(str2);
+}
+
+// Helper function
+function formatStr(str) {
+  return str
+    .replace(/[^\w]/g, "")
+    .toLowerCase()
+    .split("")
+    .sort()
+    .join("");
+}
+
+module.exports = isAnagram;
+```
+
+**_ Test #1 - Use `typeof` to check if the function exists _**: We will again be testing to see if the function exits and imports correctly, but this time we will use a different way to check, using `typeof` inside the `expect()` and matching `function` inside the `toEqual()`. This way if the result returns `true`, then we know that `isAnagram` function exists and it is indeed a function.
+
+```js
+const isAnagram = require("./anagram");
+
+test("isAnagram function exists", () => {
+  expect(typeof isAnagram).toEqual("function");
+});
+```
+
+**_ Test #2 - Testing the `isAnagram` function for truthy and falsy values_**: Next up we would like to check if the `isAnagram` function indeed checks the 2 strings correctly for anagrams, and so we will pass 2 test that we should expect to be truthy and one test that we should expect to be falsy.
+
+```js
+test("cinema is an anagram of iceman", () => {
+  expect(isAnagram("cinema", "iceman")).toBeTruthy();
+});
+
+test("Dormitory is an anagram of dirty room#", () => {
+  expect(isAnagram("Dormitory", "dirty room#")).toBeTruthy();
+});
+
+test("Hello is not an anagram of Aloha", () => {
+  expect(isAnagram("Hello", "Aloha")).toBeFalsy();
+});
+```
+
+We run the test and see that all the test has passed successfully as expected.
+
+## Testing "life-cycle" methods
+
+We will look at functions that can be run before and/or after each test run we perform. We will go back to the first `test.test.js` file and add 2 dummy functions that simulate initialization and termination of a database.
+
+```js
+const initDatabase = () => console.log("database initialized");
+const terminateDatabase = () => console.log("database terminated");
+```
+
+Now we will use `beforeEach()` and `afterEach()` functions to set what happens befote and after each test run we perform, and we pass in the 2 dummy functions we set earlier as arguments.
+
+```js
+beforeEach(() => initDatabase());
+afterEach(() => terminateDatabase());
+```

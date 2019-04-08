@@ -213,3 +213,31 @@ test("User fetched name should be Leanne Graham", async () => {
 The test passes successfully.
 
 ## Testing code from the Traversy Media "JavaScript Cardio"
+
+We will go to the Traversy Media "JavaScript Cardio" tutorial and copy codes from there to test them out. The first code we be looking at is the "Reverse String" function.
+
+### Testing the `reverseString` function
+
+For this, we will create a new file called `reversestring.js` that will hold the JavaScript functions, and a corresponding `reversestring.test.js` that will hold the Jest testing functions. Next we will write the `reverseString` function and export it.
+
+```js
+const reverseString = str =>
+  str
+    .split("")
+    .reverse()
+    .join("");
+
+module.exports = reverseString;
+```
+
+**_ Test #1 - Use `toBeDEfined()` to check if the function exists _**: Now we will import the functions and write the test inside the test file. We will first want to check if the function is even defined and exists, and so we will use the `toBeDefined()` matcher for that.
+
+```js
+const reverseString = require("./reversestring");
+
+test("reverseString function exists", () => {
+  expect(reverseString).toBeDefined();
+});
+```
+
+**_ Test #2 - Check if the function reverses the string _**: Now we will write a test to see if the function actually does what is supposed to do and reverses the string correctly.

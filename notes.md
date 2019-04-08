@@ -436,3 +436,16 @@ describe("Checking Names", () => {
   });
 });
 ```
+
+## The `--watchAll` flag
+
+We could have our tests run as we developing. What we need to do is to create a new script in the `package.json` file that is equal to `jest --watchAll`.
+
+```js
+  "scripts": {
+    "test": "jest",
+    "testwatch": "jest --watchAll"
+  }
+```
+
+Now the Jest tester will run "live" in the console, and everytime we will make a change in the testing functions and save, it will automatically will run the tester and output the result without us needing to use an npm command in the terminal. It will continuously watch and report the results of the test without us needing to specify when to run.

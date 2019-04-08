@@ -4,7 +4,8 @@
   "description": "Jest Crash Course by Traversy Media",
   "main": "test.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "testwatch": "jest --watchAll"
   },
   "keywords": [
     "Jest",

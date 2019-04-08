@@ -2,8 +2,11 @@ const functions = require('./functions');
 
 // Dummy functions:
 
-beforeEach(() => initDatabase());
-afterEach(() => terminateDatabase());
+// beforeEach(() => initDatabase());
+// afterEach(() => terminateDatabase());
+
+beforeAll(() => initDatabase());
+afterAll(() => terminateDatabase());
 
 const initDatabase = () => console.log('database initialized');
 const terminateDatabase = () => console.log('database terminated');

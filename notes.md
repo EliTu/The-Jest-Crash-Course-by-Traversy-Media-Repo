@@ -386,6 +386,8 @@ We run the test and see that all the test has passed successfully as expected.
 
 ## Testing "life-cycle" methods
 
+### The `beforeEach` and `afterEach` functions
+
 We will look at functions that can be run before and/or after each test run we perform. We will go back to the first `test.test.js` file and add 2 dummy functions that simulate initialization and termination of a database.
 
 ```js
@@ -398,4 +400,13 @@ Now we will use `beforeEach()` and `afterEach()` functions to set what happens b
 ```js
 beforeEach(() => initDatabase());
 afterEach(() => terminateDatabase());
+```
+
+After we run the test and it finishes, we can see in the Jest feedback that the `initDatabase()` function ran before each test and `terminateDatabase()` function ran after each test in that file.
+
+### The `beforeAll` and `afterAll` functions
+
+What if we want to run the `initDatabase()` function before all of the test, and once they are completed run the `terminateDatabase()` function ? We should use `beforeAll` and `afterAll` functions to perform that.
+
+```js
 ```

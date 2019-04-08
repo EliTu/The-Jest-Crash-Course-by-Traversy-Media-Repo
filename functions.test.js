@@ -5,8 +5,24 @@ const functions = require('./functions');
 // beforeEach(() => initDatabase());
 // afterEach(() => terminateDatabase());
 
-beforeAll(() => initDatabase());
-afterAll(() => terminateDatabase());
+// beforeAll(() => initDatabase());
+// afterAll(() => terminateDatabase());
+
+const nameCheck = () => console.log('Checking name...');
+
+describe('Checking Names', () => {
+    beforeEach(() => nameCheck());
+
+    test('User is Jeff', () => {
+        const user = 'Jeff';
+        expect(user).toBe('Jeff');
+    });
+
+    test('User is Karen', () => {
+        const user = 'Karen';
+        expect(user).toBe('Karen');
+    });
+});
 
 const initDatabase = () => console.log('database initialized');
 const terminateDatabase = () => console.log('database terminated');
@@ -17,13 +33,13 @@ test('Adds 2 + 2 to equal 4', () => {
     expect(functions.add(2, 2)).toBe(4);
 });
 
-// test('Adds 2 + 2 to NOT equal 5', () => {
-//     expect(functions.add(2, 2)).not.toBe(5);
-// });
+test('Adds 2 + 2 to NOT equal 5', () => {
+    expect(functions.add(2, 2)).not.toBe(5);
+});
 
-// test('Should be null', () => {
-//     expect(functions.isNull()).toBeNull();
-// });
+test('Should be null', () => {
+    expect(functions.isNull()).toBeNull();
+});
 
 // test('Should be falsy', () => {
 //     expect(functions.checkValue(2)).toBeFalsy();

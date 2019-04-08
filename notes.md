@@ -409,4 +409,30 @@ After we run the test and it finishes, we can see in the Jest feedback that the 
 What if we want to run the `initDatabase()` function before all of the test, and once they are completed run the `terminateDatabase()` function ? We should use `beforeAll` and `afterAll` functions to perform that.
 
 ```js
+beforeAll(() => initDatabase());
+afterAll(() => terminateDatabase());
+```
+
+Now we can see that the functions only ran twice: Once before all the test had began, and again after they have concluded.
+
+### Target specific tests with `describe()`
+
+Instead of targeting all or each of the tests we run, we could also target specific tests using the `describe()` function. Inside the parentheses we pass in what we want to run and then we pass in the functions. We'll create a small function that checks for names and console logs a string, and then inside the `describe()` block we will use this function, and also create couple of tests to see if the name that is passed is correct.
+
+```js
+const nameCheck = () => console.log("Checking name...");
+
+describe("Checking Names", () => {
+  beforeEach(() => nameCheck());
+
+  test("User is Jeff", () => {
+    const user = "Jeff";
+    expect(user).toBe("Jeff");
+  });
+
+  test("User is Karen", () => {
+    const user = "Karen";
+    expect(user).toBe("Karen");
+  });
+});
 ```
